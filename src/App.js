@@ -16,10 +16,14 @@ function App() {
   }
   , []);
 
-  const [filteredRepos, setFilteredRepos] = useState([]);
-  useEffect(() => {
-    search.length && setFilteredRepos(repos.filter(repo => repo.name.includes(search)));
-  }, [search, repos]);
+  // CHANGE THE CODE BELOW
+  // const [filteredRepos, setFilteredRepos] = useState([]);
+  // useEffect(() => {
+  //   search.length && setFilteredRepos(repos.filter(repo => repo.name.includes(search)));
+  // }, [search, repos]);
+
+  //FOR THIS CODE TO RESOLUTION RE-RENDER BASED ON DERIVED STATES
+  const filteredRepos = repos.filter(repo => repo.name.includes(search))
 
   return (
     <div className="App">
