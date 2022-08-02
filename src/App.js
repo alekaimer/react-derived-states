@@ -1,23 +1,42 @@
-import logo from './logo.svg';
+// DERIVED STATES
+
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+  const [repos, setRepos] = useState([]);
+  const [search, setSearch] = useState('');
+
+  console.log('renderizou')
+
+  useEffect(() => {
+    fetch('https://api.github.com/users/alekaimer/repos')
+      .then(res => res.json())
+      .then(data => setRepos(data));
+  }
+  , []);
+
+  const [filteredRepos, setFilteredRepos] = useState([]);
+  useEffect(() => {
+    search.length && setFilteredRepos(repos.filter(repo => repo.name.includes(search)));
+  }, [search, repos]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input
+        type={'text'} 
+        placeholder={'Buscar...'} 
+        onChange={e=>setSearch(e.target.value)}
+        value={search}
+      />
+      <ul>
+        {
+          search.length > 0 ?
+            filteredRepos.map(repo => <li key={repo.id}><a href={repo.html_url} target="_blank" rel="noreferrer">{repo.name}</a></li>)
+            :
+            repos.map(repo => <li key={repo.id}><a href={repo.html_url} target="_blank" rel="noreferrer">{repo.name}</a></li>)
+        }
+      </ul>
     </div>
   );
 }
