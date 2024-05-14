@@ -5,7 +5,7 @@ import './App.css';
 
 function App() {
   const [repos, setRepos] = useState([]);
-  const [search, setSearch] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   console.log('renderizou')
 
@@ -19,12 +19,12 @@ function App() {
   // CHANGE THE CODE BELOW
   // const [filteredRepos, setFilteredRepos] = useState([]);
   // useEffect(() => {
-  //   search.length && setFilteredRepos(repos.filter(repo => repo.name.includes(search)));
-  // }, [search, repos]);
+  //   searchTerm.length && setFilteredRepos(repos.filter(repo => repo.name.includes(searchTerm)));
+  // }, [searchTerm, repos]);
 
   //FOR THIS CODE TO RESOLUTION RE-RENDER BASED ON DERIVED STATES
-  const filteredRepos = search.length > 0
-    ? repos.filter(repo => repo.name.includes(search))
+  const filteredRepos = searchTerm.length > 0
+    ? repos.filter(repo => repo.name.includes(searchTerm))
     : repos
 
   return (
@@ -32,9 +32,10 @@ function App() {
       <input
         type={'text'} 
         placeholder={'Buscar...'} 
-        onChange={e=>setSearch(e.target.value)}
-        value={search}
+        onChange={e=>setSearchTerm(e.target.value)}
+        value={searchTerm}
       />
+      
       <ul>
         {
           filteredRepos.map(repo => <li key={repo.id}><a href={repo.html_url} target="_blank" rel="noreferrer">{repo.name}</a></li>)
