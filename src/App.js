@@ -23,7 +23,9 @@ function App() {
   // }, [search, repos]);
 
   //FOR THIS CODE TO RESOLUTION RE-RENDER BASED ON DERIVED STATES
-  const filteredRepos = repos.filter(repo => repo.name.includes(search))
+  const filteredRepos = search.length > 0
+    ? repos.filter(repo => repo.name.includes(search))
+    : repos
 
   return (
     <div className="App">
@@ -35,10 +37,7 @@ function App() {
       />
       <ul>
         {
-          search.length > 0 ?
-            filteredRepos.map(repo => <li key={repo.id}><a href={repo.html_url} target="_blank" rel="noreferrer">{repo.name}</a></li>)
-            :
-            repos.map(repo => <li key={repo.id}><a href={repo.html_url} target="_blank" rel="noreferrer">{repo.name}</a></li>)
+          filteredRepos.map(repo => <li key={repo.id}><a href={repo.html_url} target="_blank" rel="noreferrer">{repo.name}</a></li>)
         }
       </ul>
     </div>
